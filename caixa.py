@@ -1,7 +1,4 @@
-#from util import *
-#from menu_atendimento import *
 from atendimento import *
-from atendimento_db import *
 
 def principal():
     opcao = entrar_opcao()

@@ -1,9 +1,5 @@
-from util import *
 from menu_atendimento import *
-#from datetime import datetime
 from tabulate import tabulate
-from models import *
-from atendimento_db import *
 
 def novo_item(produtos, quantidade_item):  
     #quantidade_item vem de def efetuar_atendimento

@@ -1,8 +1,6 @@
 from datetime import datetime
 from tabulate import tabulate
 from atendimento_db import *
-#from atendimento import *
-from models import *
 
 def entrar_inteiro(mensagem):
     while True:
