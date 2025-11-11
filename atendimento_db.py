@@ -1,15 +1,18 @@
 from models import *
 from conexao import *
+from sqlalchemy.orm import joinedload
 
 def consultar_produtos_db():
-    produtos = []
-    try:
-        session = conectar()
+    with session:
         produtos = session.query(Produto).all()
-    except Exception as ex:
-        print(ex)
-    finally:
-        desconectar(session)
+    # produtos = []
+    # try:
+    #     session = conectar()
+    #     produtos = session.query(Produto).all()
+    # except Exception as ex:
+    #     print(ex)
+    # finally:
+    #     desconectar(session)
     return produtos
 
 def consultar_produto_db(id):

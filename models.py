@@ -38,4 +38,19 @@ class Item:
     def __repr__(self):
         return self.__str__()
     
+class Cliente (Base):
+    __tablename__ = "cliente"
+    id         = Column(Integer, primary_key=True)
+    nome       = Column(String)
+
+    def __init__(self, id, nome):
+        self.id = id
+        self.nome = nome
+
+    def __str__(self):
+       return str(self.id) + " " + self.nome
+
+    def __repr__(self):
+        return self.__str__()
+    
     
