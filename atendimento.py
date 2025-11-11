@@ -1,6 +1,6 @@
 from util import *
-from menu import *
-from datetime import datetime
+from menu_atendimento import *
+#from datetime import datetime
 from tabulate import tabulate
 from models import *
 from atendimento_db import *
@@ -8,20 +8,23 @@ from atendimento_db import *
 def novo_item(produtos, quantidade_item):
     #print(produtos)  
     #quantidade_item vem de def efetuar_atendimento
-    id_produto_escolhido = entrar_inteiro("Informe o id do produto escolhido: ")          
-    produto_escolhido = consultar_produto_db(id_produto_escolhido)
-    #print(produto_escolhido) #é um 1 único objeto vindo do banco.
-    if not produto_escolhido:
-        print("Produto não cadastrado") 
-        return novo_item(produtos, quantidade_item)#chama a função novamente
+    produto_escolhido = obter_produto_escolhido()
+    # id_produto_escolhido = entrar_inteiro("Informe o id do produto escolhido: ")          
+    # produto_escolhido = consultar_produto_db(id_produto_escolhido)
+    # #print(produto_escolhido) #é um 1 único objeto vindo do banco.
+    # if not produto_escolhido:
+    #     print("Produto não cadastrado") 
+    #     return novo_item(produtos, quantidade_item)#chama a função novamente
 
-    quantidade_produto_escolhido = entrar_inteiro("Informe a quantidade do produto: ")
+    quantidade_produto_escolhido = obter_quantidade_produto_escolhido(produto_escolhido)
+    atualizar_quantidade_estoque(produto_escolhido, quantidade_produto_escolhido)
+    # quantidade_produto_escolhido = entrar_inteiro("Informe a quantidade do produto: ")
     
-    if quantidade_produto_escolhido < 0:
-        print("Erro: quantidade deve ser maior que zero")
-    else:             
-        nova_quantidade = produto_escolhido.quantidade - quantidade_produto_escolhido #ATUALIZAR QUANTIDADE ESTOQUE
-        alterar_produto_db(nova_quantidade, produto_escolhido)
+    # if quantidade_produto_escolhido < 0:
+    #     print("Erro: quantidade deve ser maior que zero")
+    # else:             
+    #     nova_quantidade = produto_escolhido.quantidade - quantidade_produto_escolhido #ATUALIZAR QUANTIDADE ESTOQUE
+    #     alterar_produto_db(nova_quantidade, produto_escolhido)
              
     preco_produto_escolhido = produto_escolhido.preco    
     preco_total_produto_escolhido= preco_produto_escolhido * quantidade_produto_escolhido    
@@ -29,7 +32,7 @@ def novo_item(produtos, quantidade_item):
           
 def atendimento(produtos):  
     lista_atendimentos = []  
-    opcao_do_caixa = menu_escolher_atendimento() #ter while das opcoes menu_escolher_atendimento
+    opcao_do_caixa = menu_escolher_atendimento()
     numero_cliente = 1
     while opcao_do_caixa != 2:
         match (opcao_do_caixa):
