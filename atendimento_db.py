@@ -36,7 +36,6 @@ def alterar_produto_db(nova_quantidade, produto_escolhido):
 
 def consultar_produtos_zerados_db():
     #comando = "select * from produto where quantidade <= 0;"
-    #produtos = []
     try:
         session = conectar()
         produtos_zerados = session.query(Produto).filter(Produto.quantidade <= 0).all() #usando all() já me devolve uma lista
