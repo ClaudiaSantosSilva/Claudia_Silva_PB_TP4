@@ -6,21 +6,27 @@ MERCADO = "mercado.db"
 DIR = os.path.dirname(os.path.abspath(__file__))
 MERCADO = os.path.join(DIR, MERCADO)
 
-def conectar():
-    session = None
-    try:
-        engine = create_engine("sqlite:///" + MERCADO)
-        session = sessionmaker(bind=engine)()
-    except Exception as ex:
-        print(ex)
-    return session
+engine = create_engine("sqlite:///" + MERCADO)
+Session = sessionmaker(bind=engine)
+session = Session()
 
-def desconectar(session):
-    if session:
-        session.close()
+# def conectar():
+#     session = None
+#     try:
+#         engine = create_engine("sqlite:///" + MERCADO)
+#         session = sessionmaker(bind=engine)()
+#     except Exception as ex:
+#         print(ex)
+#     return session
 
-session = conectar()
-desconectar(session)        
+# def desconectar(session):
+#     if session:
+#         session.close()
+
+# session = conectar()
+# desconectar(session)     
+
+
 
      
 
