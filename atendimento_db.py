@@ -1,6 +1,7 @@
 from models import *
 from conexao import *
-from sqlalchemy.orm import joinedload
+from sqlalchemy.exc import NoResultFound
+from sqlalchemy import func
 
 def consultar_produtos_db():
     with session:
@@ -14,6 +15,23 @@ def consultar_produtos_db():
     # finally:
     #     desconectar(session)
     return produtos
+
+def consultar_cliente_db(id):
+    try:
+        cliente = session.query(Cliente).where(Cliente.id == id).one()
+        return cliente.nome
+    except NoResultFound:
+        print("Necessário realizar cadastro. Cliente não encontrado")
+        realizar_cadastro_cliente()
+
+def realizar_cadastro_cliente():
+    maior_id = session.query(func.max(Cliente.id)).scalar() #scalar retorna o valor em si
+    novo_id = 1 if maior_id is None else maior_id + 1
+    nome = f"Cliente{novo_id}"
+    novo_cliente = Cliente(nome)
+    session.add(novo_cliente)
+    session.commit()
+    consultar_cliente_db(novo_id)      
 
 def consultar_produto_db(id):
     produto = None

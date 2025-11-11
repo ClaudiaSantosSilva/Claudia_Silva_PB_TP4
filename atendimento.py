@@ -19,7 +19,8 @@ def atendimento(produtos):
     while opcao_do_caixa != 2:
         match (opcao_do_caixa):
             case 1: #iniciar atendimento
-                print(f"Cliente {numero_cliente}")
+                id_cliente = obter_id_cliente()
+                print(f"Cliente{id_cliente}")
                 atendimento = efetuar_atendimento(produtos, numero_cliente)
                 lista_atendimentos.append([f"Cliente {numero_cliente}", atendimento])
                 numero_cliente+=1

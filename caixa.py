@@ -6,6 +6,7 @@ def principal():
         match (opcao):
             case 1: 
                 produtos = consultar_produtos_db() 
+                carregar_clientes_json()
                 atendimento(produtos)
             case 0: 
                 print("Saindo do sistema...")

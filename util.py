@@ -16,8 +16,9 @@ def entrar_inteiro(mensagem):
     #return numero 
 
 def carregar_clientes_json():
+    Base.metadata.create_all(engine) #cria a tabela caso não exista
     df = pd.read_json('clientes.json')
-    with session:
+    with Session(engine) as session:
         for _, row in df.iterrows(): # O traço ignora o indice da linha. Row é uma Series com os dados da linha.
             cliente = Cliente(nome=row['nome'])
             session.add(cliente)
@@ -29,6 +30,11 @@ def carregar_clientes_json():
     #         cliente = Cliente(nome=item['nome']) 
     #         session.add(cliente)
     #     session.commit()
+
+def obter_id_cliente():
+    id= entrar_inteiro("Informe o id do cliente: ")
+    cliente = consultar_cliente_db(id)
+    return cliente
 
 def obter_produto_escolhido():
     id_produto_escolhido = entrar_inteiro("Informe o id do produto escolhido: ")          
