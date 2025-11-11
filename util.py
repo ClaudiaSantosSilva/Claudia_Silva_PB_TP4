@@ -1,6 +1,9 @@
 from datetime import datetime
 from tabulate import tabulate
 from atendimento_db import *
+import json
+from conexao import *
+from models import *
 
 def entrar_inteiro(mensagem):
     while True:
@@ -11,6 +14,16 @@ def entrar_inteiro(mensagem):
         except Exception:
             print("Erro: valor invalido.")    
     #return numero 
+
+def carregar_clientes_json():
+    with open('clientes.json', 'r', encoding='utf-8') as c:
+        clientes = json.load(c)
+
+    with session:
+        for item in clientes:
+            cliente = Cliente(nome=item['nome']) 
+            session.add(cliente)
+        session.commit()
 
 def obter_produto_escolhido():
     id_produto_escolhido = entrar_inteiro("Informe o id do produto escolhido: ")          
