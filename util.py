@@ -21,8 +21,12 @@ def carregar_clientes_json():
     #with Session(engine) as session:
     with session:
         for _, row in df.iterrows(): # O traço ignora o indice da linha. Row é uma Series com os dados da linha.
-            cliente = Cliente(nome=row['nome'])
-            session.add(cliente)
+            #cliente = Cliente(nome=row['nome'])
+            nome=row['nome']
+            cliente_incluido = session.query(Cliente).filter_by(nome=nome).first()
+            if not cliente_incluido: #para evitar replicação da tabela cliente ao iniciar atendimento
+                cliente = Cliente(nome= nome)
+                session.add(cliente)
         session.commit()
     # with open('clientes.json', 'r', encoding='utf-8') as c:
     #     clientes = json.load(c)
