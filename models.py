@@ -43,8 +43,7 @@ class Cliente (Base):
     id         = Column(Integer, primary_key=True)
     nome       = Column(String)
 
-    def __init__(self, id, nome):
-        self.id = id
+    def __init__(self, nome):
         self.nome = nome
 
     def __str__(self):

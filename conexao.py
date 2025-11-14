@@ -6,7 +6,7 @@ MERCADO = "mercado.db"
 DIR = os.path.dirname(os.path.abspath(__file__))
 MERCADO = os.path.join(DIR, MERCADO)
 
-engine = create_engine("sqlite:///" + MERCADO, echo=True)
+engine = create_engine("sqlite:///" + MERCADO)
 Session = sessionmaker(bind=engine)
 session = Session()
 

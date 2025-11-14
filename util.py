@@ -18,7 +18,8 @@ def entrar_inteiro(mensagem):
 def carregar_clientes_json():
     Base.metadata.create_all(engine) #cria a tabela caso não exista
     df = pd.read_json('clientes.json')
-    with Session(engine) as session:
+    #with Session(engine) as session:
+    with session:
         for _, row in df.iterrows(): # O traço ignora o indice da linha. Row é uma Series com os dados da linha.
             cliente = Cliente(nome=row['nome'])
             session.add(cliente)
