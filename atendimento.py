@@ -19,19 +19,22 @@ def atendimento(produtos):
     while opcao_do_caixa != 2:
         match (opcao_do_caixa):
             case 1: #iniciar atendimento
-                id_cliente = obter_id_cliente()
-                print(f"Cliente: {id_cliente}")
-                atendimento = efetuar_atendimento(produtos, numero_cliente)
-                lista_atendimentos.append([f"Cliente {numero_cliente}", atendimento])
+                cliente = obter_id_cliente() #retorna o cliente (nome)
+                print(f"Cliente: {cliente}")
+                #atendimento = efetuar_atendimento(produtos, numero_cliente)
+                atendimento = efetuar_atendimento(produtos, cliente)
+                #lista_atendimentos.append([f"Cliente: {numero_cliente}", atendimento])
+                lista_atendimentos.append([cliente, atendimento])
                 numero_cliente+=1
             case _:
                 print("Opção inválida") 
         opcao_do_caixa = menu_escolher_atendimento()
     fechar_caixa(lista_atendimentos, produtos) 
 
-def finalizar_atendimento(lista_itens, numero_cliente):
+#def finalizar_atendimento(lista_itens, numero_cliente):
+def finalizar_atendimento(lista_itens, cliente):
     print("\nFinalizando atendimento")
-    print(f"Cliente {numero_cliente}") 
+    print(f"Cliente: {cliente}") 
     print(f"{obter_data_hora()}\n")
     #lista_itens é uma lista de lista de objetos gerada no efetuar_atendimento.
     tabela = [["Item", "Produto", "Quant.", "Preço", "Total"]]
@@ -44,9 +47,11 @@ def finalizar_atendimento(lista_itens, numero_cliente):
     print(f"Itens: {len(lista_itens)}")
     print(f"Total: {sum(item.preco_item for item in lista_itens)}")
     print()
-    return numero_cliente
+    #return numero_cliente
+    return cliente
 
-def efetuar_atendimento(produtos, numero_cliente):    
+#def efetuar_atendimento(produtos, numero_cliente): 
+def efetuar_atendimento(produtos, cliente):    
     lista_itens_compra = [] #será lista de objetos (cada novo_item)
     opcao_atendimento = situacao_atendimento() #ter while das opçoes situacao atendimento
     while opcao_atendimento !=2:
@@ -57,7 +62,7 @@ def efetuar_atendimento(produtos, numero_cliente):
             case _:
                 print("Opção inválida")
         opcao_atendimento = situacao_atendimento()
-    finalizar_atendimento(lista_itens_compra, numero_cliente)
+    finalizar_atendimento(lista_itens_compra, cliente)
     return lista_itens_compra
 
 
