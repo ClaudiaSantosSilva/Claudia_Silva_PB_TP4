@@ -20,7 +20,7 @@ def obter_dados_produtos(bs):
 
     produtos = bs.find_all('div', class_='card-body') #Pego só a div com as infos todos os produtos
     for produto in produtos:
-        nome = produto.find('h5', class_='card-title').text.strip()
+        nome = produto.find('h5', class_='card-title').text.title().strip()
         #quantidade = produto.find('p').get('data-qtd').strip()
         quantidade = produto.find('p', attrs={'data-qtd': True}).get('data-qtd').strip() #para garantir q pega o valor do atributo
         preco = produto.find('p', class_='card-price').get('data-preco').strip()
@@ -48,4 +48,4 @@ def produtos_csv():
 
     df.to_csv("produtos.csv", index=False, encoding="utf-8")
     
-produtos_csv()
+produtos_csv() # PASSAR CSV PARA BANCO DADOS. CHAMAR ESSA FÇ OU OUTRA ANTES DO ATENDIMENTO COM O CUIDADO DE NÃO REPLICAR A TABELA PRODUTOS

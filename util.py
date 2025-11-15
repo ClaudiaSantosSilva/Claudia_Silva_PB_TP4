@@ -3,7 +3,7 @@ from tabulate import tabulate
 from atendimento_db import *
 from conexao import *
 from models import *
-import pandas as pd
+#import pandas as pd
 
 def entrar_inteiro(mensagem):
     while True:
@@ -15,26 +15,26 @@ def entrar_inteiro(mensagem):
             print("Erro: valor invalido.")    
     #return numero 
 
-def carregar_clientes_json():
-    Base.metadata.create_all(engine) #cria a tabela caso não exista
-    df = pd.read_json('clientes.json')
-    #with Session(engine) as session:
-    with session:
-        for _, row in df.iterrows(): # O traço ignora o indice da linha. Row é uma Series com os dados da linha.
-            #cliente = Cliente(nome=row['nome'])
-            nome=row['nome']
-            cliente_incluido = session.query(Cliente).filter_by(nome=nome).first()
-            if not cliente_incluido: #para evitar replicação da tabela cliente ao iniciar atendimento
-                cliente = Cliente(nome= nome)
-                session.add(cliente)
-        session.commit()
-    # with open('clientes.json', 'r', encoding='utf-8') as c:
-    #     clientes = json.load(c)
-    # with session:
-    #     for item in clientes:
-    #         cliente = Cliente(nome=item['nome']) 
-    #         session.add(cliente)
-    #     session.commit()
+# def carregar_clientes_json():
+#     Base.metadata.create_all(engine) #cria a tabela caso não exista
+#     df = pd.read_json('clientes.json')
+#     #with Session(engine) as session:
+#     with session:
+#         for _, row in df.iterrows(): # O traço ignora o indice da linha. Row é uma Series com os dados da linha.
+#             #cliente = Cliente(nome=row['nome'])
+#             nome=row['nome']
+#             cliente_incluido = session.query(Cliente).filter_by(nome=nome).first()
+#             if not cliente_incluido: #para evitar replicação da tabela cliente ao iniciar atendimento
+#                 cliente = Cliente(nome= nome)
+#                 session.add(cliente)
+#         session.commit()
+#     # with open('clientes.json', 'r', encoding='utf-8') as c:
+#     #     clientes = json.load(c)
+#     # with session:
+#     #     for item in clientes:
+#     #         cliente = Cliente(nome=item['nome']) 
+#     #         session.add(cliente)
+#     #     session.commit()
 
 def obter_id_cliente():
     id= entrar_inteiro("Informe o id do cliente: ")
