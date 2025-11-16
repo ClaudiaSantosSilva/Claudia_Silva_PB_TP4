@@ -3,27 +3,28 @@ from conexao import *
 from sqlalchemy.exc import NoResultFound
 from sqlalchemy import func
 import pandas as pd
-from webscraping_to_csv import *
 
 def carregar_produtos_db():
     df=pd.read_csv('produtos.csv')
     with session:
         try:
+            id=6
             for _, row in df.iterrows(): # O traço ignora o indice da linha. Row é uma Series com os dados da linha.
                 nome=row['nome']
                 produto_incluido = session.query(Produto).filter_by(nome=nome).first()
+                print(row)
                 if not produto_incluido: #para evitar replicação da tabela produto ao iniciar atendimento
-                    produto = Produto(nome= nome, quantidade = row['quantidade'], preco = row['preco'])
+                    produto = Produto(id,nome= nome, quantidade = row['quantidade'], preco = row['preco'])
                     session.add(produto)
+                    id+=1
                 else: #atualiza o produto, já no banco, com os novos valores obtidos do novo webscraping
                     produto_incluido.quantidade = row['quantidade']
-                    produto_incluido.preco = row['preco']    
-        except Exception:
-            print(f"Erro ao adicionar o produto {nome} no banco de dados.")            
-        session.commit()
-    
-
-
+                    produto_incluido.preco = row['preco']
+            session.commit()            
+        except Exception as e:
+            print(f"Erro ao adicionar/atualizar o produto {nome}: {e}")            
+        
+ 
 def consultar_produtos_db():
     with session:
         produtos = session.query(Produto).all()
